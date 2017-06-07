@@ -4,10 +4,13 @@
 简述总体内容
 
 1.直播流程介绍
+
 2.Mac搭建nginx+rtmp服务器(模拟推流拉流)
+
 3.简单的集成推流拉流(实用篇)
 
-#二:Mac搭建nginx+rtmp服务器(模拟推流拉流)
+
+# 二:Mac搭建nginx+rtmp服务器(模拟推流拉流)
 
   手动输入命令的时候容易出现了bug(所以, 建议大家直接复制命令, 不要手动输入命令). 所以记录一份详细的搭建步骤,参考Mac搭建nginx+rtmp服务器
 
@@ -61,7 +64,7 @@
  ffmpeg -re -i /Users/jinqianxiang/Desktop/BigBuck.m4v -vcodec libx264 -acodec aac -strict -2 -f flv rtmp://localhost:1935/rtmplive/room
 
 
-#三.简单的集成推流拉流(实用篇)
+# 三.简单的集成推流拉流(实用篇)
 
   1，推流集成LFLiveKit，参考github demo
   

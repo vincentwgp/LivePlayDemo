@@ -6,7 +6,6 @@
 1.直播流程介绍
 2.Mac搭建nginx+rtmp服务器(模拟推流拉流)
 3.简单的集成推流拉流(实用篇)
-4.好的博客推荐
 
 #二:Mac搭建nginx+rtmp服务器(模拟推流拉流)
 
@@ -15,8 +14,10 @@
   1.打开终端, 查看是否已经安装了Homebrew, 直接终端输入命令
      man brew
   如果Mac已经安装了, 会显示一些命令的帮助信息. 此时输入Q退出即可, 直接进入第二步.反之, 如果没有安装,执行命令
+  
     ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
   如果安装后, 想要卸载
+  
     ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/uninstall)"
   2.安装nginx
 
@@ -35,6 +36,7 @@
   编辑 vim /usr/local/etc/nginx/nginx.conf
   
   在http节点后面加上rtmp配置：
+  
   rtmp {
     server {
     listen 1935;
@@ -46,21 +48,40 @@
  }
  
  然后重启nginx(其中的1.10.1要换成你自己安装的nginx版本号, 查看版本号用nginx -v命令即可)
+ 
 
   /usr/local/Cellar/nginx-full/1.10.1/bin/nginx -s reload
  
  4.安装ffmpeg
-执行命令
+ 
  brew install ffmpeg
+ 
  推流
-ffmpeg -re -i /Users/jinqianxiang/Desktop/BigBuck.m4v -vcodec libx264 -acodec aac -strict -2 -f flv rtmp://localhost:1935/rtmplive/room
+ 
+ ffmpeg -re -i /Users/jinqianxiang/Desktop/BigBuck.m4v -vcodec libx264 -acodec aac -strict -2 -f flv rtmp://localhost:1935/rtmplive/room
 
 
 #三.简单的集成推流拉流(实用篇)
+
   1，推流集成LFLiveKit，参考github demo
+  
   pod 'LFLiveKit'
   
-  2.拉流
+  2.拉流集成 ijkplayer
+    编译参考：http://www.jianshu.com/p/1f06b27b3ac0
+  
+    IJKFFOptions *options = [IJKFFOptions optionsByDefault]; //使用默认配置
+    NSURL * url = [NSURL URLWithString:@"rtmp://10.0.60.65:1935/rtmplive/room"];
+    self.player = [[IJKFFMoviePlayerController alloc] initWithContentURL:url withOptions:options]; //初始化播放器，播放在线视频或直播(RTMP)
+    self.player.view.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
+    self.player.view.frame = self.view.bounds;
+    self.player.scalingMode = IJKMPMovieScalingModeAspectFit; //缩放模式
+    self.player.shouldAutoplay = YES; //开启自动播放
+    
+    self.view.autoresizesSubviews = YES;
+    [self.view addSubview:self.player.view];
+    
+    
 
 
 
